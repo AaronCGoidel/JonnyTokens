@@ -5,7 +5,7 @@ import MintStatus from "./MintStatus";
 import { ethers } from "ethers";
 import JonnyTokens from "../artifacts/contracts/JonnyTokens.sol/JonnyTokens.json";
 
-const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
+const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS || "0xBAeB29bac0D5b40e696dcCb16F7987758872e307";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -47,7 +47,7 @@ function Home() {
 }
 
 function NFTImage({ tokenId, getCount }) {
-  const contentId = import.meta.env.VITE_CONTENT_LOCATION;
+  const contentId = import.meta.env.VITE_CONTENT_LOCATION || "Qmau29yDnyLjn4kZtiLwiJ84gHamBnCTJQzuHjd8cSfufo";
   const metadataURI = `${contentId}/${tokenId + 1}.png`;
   const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/${tokenId + 1}.png`;
 
