@@ -5,7 +5,7 @@ import MintStatus from "./MintStatus";
 import { ethers } from "ethers";
 import JonnyTokens from "../artifacts/contracts/JonnyTokens.sol/JonnyTokens.json";
 
-const contractAddress = import.meta.env.CONTRACT_ADDRESS;
+const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -16,7 +16,6 @@ const contract = new ethers.Contract(contractAddress, JonnyTokens.abi, signer);
 function Home() {
   const [totalMinted, setTotalMinted] = useState(0);
   useEffect(() => {
-    console.log(import.meta.env);
     getCount();
   }, []);
 
@@ -27,7 +26,7 @@ function Home() {
   };
 
   return (
-    <div className="p-5 bg-slate-900">
+    <div className="p-5 bg-slate-900 h-screen w-screen">
       <div className="flex flex-wrap items-start">
         <WalletBalance />
         <MintStatus minted={totalMinted} total={7} />
@@ -48,7 +47,7 @@ function Home() {
 }
 
 function NFTImage({ tokenId, getCount }) {
-  const contentId = import.meta.env.CONTENT_LOCATION;
+  const contentId = import.meta.env.VITE_CONTENT_LOCATION;
   const metadataURI = `${contentId}/${tokenId + 1}.png`;
   const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/${tokenId + 1}.png`;
 
