@@ -16,6 +16,7 @@ const contract = new ethers.Contract(contractAddress, JonnyTokens.abi, signer);
 function Home() {
   const [totalMinted, setTotalMinted] = useState(0);
   useEffect(() => {
+    console.log(import.meta.env)
     getCount();
   }, []);
 
