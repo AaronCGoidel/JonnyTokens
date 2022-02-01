@@ -87,7 +87,7 @@ function NFTImage({ tokenId, getCount }) {
           <img
           className="mb-2 rounded-lg"
             loading="lazy"
-            src={isMinted ? imageURI : "img/placeholder.png"}
+            src={isMinted ? imageURI : "/img/placeholder.png"}
           />
 
           {!isMinted ? (
