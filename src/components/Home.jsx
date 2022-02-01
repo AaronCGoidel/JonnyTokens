@@ -5,15 +5,7 @@ import MintStatus from "./MintStatus";
 import { ethers } from "ethers";
 import JonnyTokens from "../artifacts/contracts/JonnyTokens.sol/JonnyTokens.json";
 
-const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
-
-const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-const signer = provider.getSigner();
-
-const contract = new ethers.Contract(contractAddress, JonnyTokens.abi, signer);
-
-function Home() {
+function Home({ signer, contract }) {
   const [totalMinted, setTotalMinted] = useState(0);
   useEffect(() => {
     getCount();
@@ -32,13 +24,20 @@ function Home() {
         <MintStatus minted={totalMinted} total={7} />
       </div>
 
-      <h1 className="mt-6 text-3xl text-white">The JonnyTokens NFT Collection</h1>
+      <h1 className="mt-6 text-3xl text-white">
+        The JonnyTokens NFT Collection
+      </h1>
       <div className="flex flex-wrap">
         {Array(totalMinted + 1)
           .fill(0)
           .map((_, i) => (
             <div key={i} className="col-sm">
-              <NFTImage tokenId={i} getCount={getCount} />
+              <NFTImage
+                tokenId={i}
+                getCount={getCount}
+                signer={signer}
+                contract={contract}
+              />
             </div>
           ))}
       </div>
@@ -46,10 +45,12 @@ function Home() {
   );
 }
 
-function NFTImage({ tokenId, getCount }) {
+function NFTImage({ tokenId, getCount, signer, contract }) {
   const contentId = import.meta.env.VITE_CONTENT_LOCATION;
   const metadataURI = `${contentId}/${tokenId + 1}.png`;
-  const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/${tokenId + 1}.png`;
+  const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/${
+    tokenId + 1
+  }.png`;
 
   const [isMinted, setIsMinted] = useState(false);
   useEffect(() => {
@@ -85,7 +86,7 @@ function NFTImage({ tokenId, getCount }) {
       {tokenId < 7 ? (
         <div className="w-80 m-2 p-5 bg-white shadow-md rounded-lg">
           <img
-          className="mb-2 rounded-lg"
+            className="mb-2 rounded-lg"
             loading="lazy"
             src={isMinted ? imageURI : "/img/placeholder.png"}
           />
