@@ -55,7 +55,7 @@ contract JonnyTokens is ERC721, ERC721URIStorage, Ownable {
         returns (uint256)
     {
         require(existingURIs[metadataURI] != 1, "NFT already minted!");
-        require(msg.value >= 0.05 ether, "Need to pay up!");
+        require(msg.value >= 0.002 ether, "Need to pay up!");
 
         uint256 newItemId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
